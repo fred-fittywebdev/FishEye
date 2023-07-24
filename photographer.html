@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<link href="css/style.css" rel="stylesheet" type="text/css"/>
+	<meta charset="utf-8">
+	<link href="assets/favicon.png" rel="icon" type="image/png">
+	<link href="https://fonts.googleapis.com/css?family=DM+Sans&display=swap" rel="stylesheet">
+	<title>Fisheye - photographe </title>
+</head>
+<body>
+<header>
+	<a href="index.html">
+		<img alt="" class="logo" src="assets/images/logo.png"/>
+	</a>
+
+</header>
+<main id="main">
+	<div class="photograph-header">
+		<div class="photograph_infos">
+			<h1></h1>
+			<p></p>
+			<p></p>
+		</div>
+		<button class="contact_button" onclick="displayModal()">Contactez-moi</button>
+	</div>
+	<div id="select">
+		<label for="orderSelect">Trier par</label>
+		<select id="orderSelect" name="orderSelect">
+			<option value="populaire">Popularité</option>
+			<option value="date">Date</option>
+			<option value="title">Titre</option>
+		</select>
+	</div>
+	
+	<section id="photograph_medias"></section>
+	<div class="photograph_likeprice"><span></span><span></span></div>
+</main>
+<div id="contact_modal">
+	<div class="modal">
+		<header>
+			<h2>Contacter</h2>
+			<img alt="" onclick="closeModal()" src="assets/icons/close.svg"/>
+		</header>
+		<form>
+			<div>
+				<label for="prenom">Prénom</label>
+				<input id="prenom" name="prenom"/>
+				<label for="nom">Nom</label>
+				<input id="nom" name="nom"/>
+				<label for="email">Email</label>
+				<input id="email" name="email"/>
+				<label for="message">Message</label>
+				<textarea id="message" name="message"></textarea>
+			</div>
+			<button class="contact_button">Envoyer</button>
+		</form>
+	</div>
+</div>
+<script src="/scripts/pages/photographer.js"></script>
+<script src="/scripts/utils/contactForm.js"></script>
+</body>
+</html>
