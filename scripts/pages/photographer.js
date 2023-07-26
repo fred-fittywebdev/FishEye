@@ -26,6 +26,7 @@ const modal = document.getElementById("contact_modal");
 	try {
 		const response = await fetch('./data/photographers.json');
 		const data = await response.json();
+		console.log(data);
 		
 		const {photographers, media} = data;
 		photographer = photographers.find((photographer) => photographer.id === photographerId);
