@@ -25,18 +25,19 @@ async function getPhotographers() {
  * @returns {Promise<any>}
  */
 async function getPhotographerInfosById() {
-	try{
-		const response = await fetch('./data/photographers.json')
-		const data = await response.json()
+	let medias;
+	try {
+		const response = await fetch('./data/photographers.json');
+		const data = await response.json();
 		
-		const {photographers, media} = data
-		photographer = photographers.data.find((photographer) => photographer.id === photographerId)
+		photographer = data.photographers;
+		photographer = photographer.find((photographer) => photographer.id === photographerId);
 		
-		medias = media.filter((media) => {
-			const {photographerId: photographerId1} = media;
-			return photographerId1 === photographerId;
-		})
+		medias = data.media;
+		medias = data.media.filter((media) => media.photographerId === photographerId);
+		console.log(medias);
 		
-		return data
-	}catch{}
+		return {photographer: photographer, medias: medias};
+	} catch {
+	}
 }
