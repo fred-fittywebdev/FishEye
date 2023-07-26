@@ -5,6 +5,9 @@ let photographer;
 let medias;
 let orderBy = "populaire"
 likes = []
+const mediaModalEl = document.getElementById('media_modal')
+const modal = document.getElementById("contact_modal");
+
 
 // fetch('./data/photographers.json').then(response => {
 // 	return response.json()
@@ -36,6 +39,24 @@ likes = []
 		orderMedias(photographer)
 		displayLikePrice(medias, photographer.price)
 		displayMedias(photographer, medias)
+		addEventListener('keydown', (event) => {
+			if (mediaModalEl.style.display && mediaModalEl.style.display !== 'none') {
+				if (event.code === 'ArrowLeft') {
+					return changeMedia('left')
+				}
+				if (event.code === 'ArrowRight') {
+					return changeMedia('right')
+				}
+				if (event.code === 'Escape') {
+					return closeMediaModal()
+				}
+			}
+			if (modal.style.display && modal.style.display !== 'none') {
+				if (event.code === 'Escape') {
+					modal.style.display = 'none'
+				}
+			}
+		})
 		
 		const orderSelect = document.querySelector('#select')
 		orderSelect.onchange = ({ target: { value } }) => orderMedias(photographer, value)
@@ -99,7 +120,6 @@ function displayMedias(photographer, medias) {
 	mediasSection.style.gridTemplateRows = 'repeat(' + Math.ceil(medias.length / 3) + ', 400px)'
 	
 	for (const media of medias) {
-		console.log(media.likes);
 		const article = document.createElement('article')
 		const link = document.createElement('a')
 		const mediaElement = media.video ? document.createElement('video') : document.createElement('img')
@@ -115,48 +135,35 @@ function displayMedias(photographer, medias) {
 		mediaElement.autoplay = false
 		
 		photoName.textContent = media.title
-		photoLike.textContent = media.likes + ' \u2665'
+		photoLike.textContent = media.likes + ' \u2661'
 		photoLike.classList.add('like')
 		photoLike.onclick = ({ target }) => {
-			if (likes.includes(media.id)) {
-				return console.log('Pouet')
-			}
-			
 			const totalLikesElement = document.querySelector('.photograph_likeprice > span:first-child')
 			
-			totalLikesElement.textContent = parseInt(totalLikesElement.textContent) + 1 + ' \u2665'
-			target.textContent = parseInt(target.textContent) + 1 + ' \u2665'
-			likes.push(media.id)
+			if (likes.includes(media.id)) {
+				console.log('Pouet')
+				const mediaIndex = likes.indexOf(media.id);
+				totalLikesElement.textContent = parseInt(totalLikesElement.textContent) - 1 + ' \u2665'
+				target.textContent = parseInt(target.textContent) - 1 + ' \u2661'
+				likes.splice(mediaIndex, 1)
+			} else {
+				totalLikesElement.textContent = parseInt(totalLikesElement.textContent) + 1 + ' \u2665'
+				target.textContent = parseInt(target.textContent) + 1 + ' \u2665'
+				likes.push(media.id)
+			}
 		}
 		
-
 		
-		
-		// photoName.textContent = media.title
-		// photoLike.textContent = media.likes + ' ♥'
-		// photoLike.classList.add('like')
-		// photoLike.onclick = ({ target }) => {
-		// 	if (likes.includes(media.id)) {
-		// 		return console.log('Pouet')
-		// 	}
-		//
-		// 	const totalLikesElement = document.querySelector('.photograph_likeprice > span:first-child')
-		//
-		// 	totalLikesElement.textContent = parseInt(totalLikesElement.textContent) + 1 + ' ♥'
-		// 	target.textContent = parseInt(target.textContent) + 1 + ' ♥'
-		// 	likes.push(media.id)
-		// }
-		//
-		// // Display media modal
-		// link.onclick = (event) => {
-		// 	event.preventDefault()
-		// 	if (event.target.classList.contains('like')) return
-		// 	media_modal.children[media_modal.children.length - 1].appendChild(mediaElement.cloneNode())
-		// 	media_modal.children[media_modal.children.length - 1].children[0].controls = true
-		// 	media_modal.children[media_modal.children.length - 1].appendChild(photoName.cloneNode(true))
-		// 	media_modal.style.display = 'inherit'
-		// 	document.body.style.overflow = 'hidden'
-		// }
+		// Display media modal
+		link.onclick = (event) => {
+			event.preventDefault()
+			if (event.target.classList.contains('like')) return
+			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(mediaElement.cloneNode())
+			mediaModalEl.children[mediaModalEl.children.length - 1].children[0].controls = true
+			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(photoName.cloneNode(true))
+			mediaModalEl.style.display = 'inherit'
+			document.body.style.overflow = 'hidden'
+		}
 		
 		link.appendChild(article)
 		article.appendChild(mediaElement)
@@ -166,6 +173,42 @@ function displayMedias(photographer, medias) {
 		mediasSection.appendChild(link)
 	}
 }
+
+// Function to switch media on click or key used
+function changeMedia(direction) {
+	console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
+	const media = mediaModalEl.children[mediaModalEl.children.length - 1].children[0]
+	console.log("media: ", media);
+	mediaModalEl.children[mediaModalEl.children.length - 1].children[1].remove()
+	const mediaSrc = media.src.split('/').pop()
+	const mediaIndex = medias.indexOf(medias.find((el) => (el.video ?? el.image) === mediaSrc))
+	media.remove()
+	let newIndex = direction === 'left' ? mediaIndex - 1 : mediaIndex + 1
+	
+	if (newIndex < 0) {
+		newIndex = medias.length - 1
+	} else if (newIndex >= medias.length) {
+		newIndex = 0
+	}
+	
+	const mediaElement = medias[newIndex].video ? document.createElement('video') : document.createElement('img')
+	const spanName = document.createElement('span')
+	
+	mediaElement.src = `./assets/images/${photographer.name}/${medias[newIndex].video ?? medias[newIndex].image}`
+	mediaElement.alt = medias[newIndex].title
+	spanName.textContent = medias[newIndex].title
+	
+	mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(mediaElement)
+	mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(spanName)
+}
+
+function closeMediaModal() {
+	mediaModalEl.children[mediaModalEl.children.length - 1].innerHTML = ''
+	mediaModalEl.style.display = 'none'
+	document.body.style.overflow = 'auto'
+}
+
+
 
 
 
