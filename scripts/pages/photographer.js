@@ -1,7 +1,7 @@
 // Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
-const searchParamsId = new URLSearchParams(location.search);
-const photographerId = +searchParamsId.get('id');
-let photographer;
+// const searchParamsId = new URLSearchParams(location.search);
+// const photographerId = +searchParamsId.get('id');
+// let photographer;
 let medias;
 let orderBy = "populaire"
 likes = []
@@ -26,13 +26,16 @@ const modal = document.getElementById("contact_modal");
 	try {
 		const response = await fetch('./data/photographers.json');
 		const data = await response.json();
-		
+		console.log(data);
+
 		const {photographers, media} = data;
 		photographer = photographers.find((photographer) => photographer.id === photographerId);
 		medias = media.filter((media) => {
 			const {photographerId: photographerId1} = media;
 			return photographerId1 === photographerId;
 		});
+		
+
 		
 		
 		photographInfos(photographer)
