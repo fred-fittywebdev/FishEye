@@ -29,6 +29,10 @@ async function getPhotographerById() {
 	return photographer;
 }
 
+/**
+ * Retrieve media of the photographer with the idea passed in url
+ * @returns {Promise<*>}
+ */
 async function getPhotographerMedia() {
 	const photographerObjet = await getPhotographerById(); //Return the photographer object
 	const selectedPhotographer = photographerObjet.id; //Return the id of the photographer of the page
