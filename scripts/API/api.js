@@ -1,43 +1,43 @@
 const searchParamsId = new URLSearchParams(location.search);
-const photographerId = +searchParamsId.get('id');
-let photographer;
+const photographerId = +searchParamsId.get("id");
 
 /**
  * Retreive photgraphers data from data/photographers.json
  * @returns {Promise<any>}
  */
 async function getPhotographers() {
-	
 	try {
-		const response = await fetch('./data/photographers.json')
-		const data = await response.json()
-		console.log(data);
-		return data
-		
+		const response = await fetch("./data/photographers.json");
+		const data = await response.json();
+		return data;
 	} catch (e) {
 		console.log(e);
 	}
-	
 }
 
 /**
- * Retrieves the photographer and his media corresponding to the id present in the url
+ * Retreive photgrapher data provided by the photgrapher id passed in the URL
  * @returns {Promise<any>}
  */
-async function getPhotographerInfosById() {
-	let medias;
-	try {
-		const response = await fetch('./data/photographers.json');
-		const data = await response.json();
-		
-		photographer = data.photographers;
-		photographer = photographer.find((photographer) => photographer.id === photographerId);
-		
-		medias = data.media;
-		medias = data.media.filter((media) => media.photographerId === photographerId);
-		console.log(medias);
-		
-		return {photographer: photographer, medias: medias};
-	} catch {
-	}
+async function getPhotographerById() {
+	
+	const data = await getPhotographers();
+
+	const photographer = data.photographers.find(
+		(p) => p.id === photographerId
+	);
+	return photographer;
+}
+
+async function getPhotographerMedia() {
+	const photographerObjet = await getPhotographerById(); //Return the photographer object
+	const selectedPhotographer = photographerObjet.id; //Return the id of the photographer of the page
+	
+	const data = await getPhotographers(); //Return all data (photographers + media) --> data : [object Object]
+	
+	const photographerMedia = data.media.filter(
+		(item) => item.photographerId === selectedPhotographer
+	); //Filter on the media with the photographerId property which is the same as the one in the URL
+	return photographerMedia;
+	//photographerMedia = points at several [object Object] which are all media created by the selected photographer
 }

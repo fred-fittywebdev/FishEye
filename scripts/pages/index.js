@@ -8,10 +8,13 @@ async function displayData(photographers) {
 	});
 }
 
+
+
 async function init() {
 	// We call the function in the api.js file to retrieve the photographers' data.
 	const {photographers} = await getPhotographers();
 	await displayData(photographers);
+	
 }
 
 init();
