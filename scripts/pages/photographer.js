@@ -1,11 +1,11 @@
 // Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
 
-// let photographer;
-let media
-let orderBy = "populaire";
+let photographer;
+let media;
+let orderBy = 'populaire';
 likes = [];
-const mediaModalEl = document.getElementById("media_modal");
-const modal = document.getElementById("contact_modal");
+const mediaModalEl = document.getElementById('media_modal');
+const modal = document.getElementById('contact_modal');
 
 
 function photographInfos(photographer) {
@@ -27,43 +27,43 @@ initHeader();
 
 async function mediaInit() {
 	try {
-		const photographer = await getPhotographerById()
-		const media = await getPhotographerMedia();
+		photographer = await getPhotographerById();
+		media = await getPhotographerMedia();
 		// media: stocke tous les medias du photographe de la page
 		displayLikePrice(media, photographer.price);
 		orderMedias(media, photographer);
 		displayMedia(media, photographer);
 		
 		// FIXME: EVENEMENT POUR CLIQUER SUR LES FLÊCHES DE LA MODALE, "ESCAPE" FONCTIONNE PAS LES FLÊCHES.
-		addEventListener("keydown", (event) => {
+		addEventListener('keydown', (event) => {
 			if (
 				mediaModalEl.style.display &&
-				mediaModalEl.style.display !== "none"
+				mediaModalEl.style.display !== 'none'
 			) {
-				if (event.code === "ArrowLeft") {
-					return changeMedia("left");
+				if (event.code === 'ArrowLeft') {
+					return changeMedia('left');
 				}
-				if (event.code === "ArrowRight") {
-					return changeMedia("right");
+				if (event.code === 'ArrowRight') {
+					return changeMedia('right');
 				}
-				if (event.code === "Escape") {
+				if (event.code === 'Escape') {
 					return closeMediaModal();
 				}
 			}
-			if (modal.style.display && modal.style.display !== "none") {
-				if (event.code === "Escape") {
-					modal.style.display = "none";
+			if (modal.style.display && modal.style.display !== 'none') {
+				if (event.code === 'Escape') {
+					modal.style.display = 'none';
 				}
 			}
 		});
 		
-		const orderSelect = document.querySelector("#select");
-		orderSelect.onchange = ({ target: { value } }) =>
+		const orderSelect = document.querySelector('#select');
+		orderSelect.onchange = ({target: {value}}) =>
 			orderMedias(media, photographer, value);
 		
-		const contactTitle = document.querySelector("#contact_modal h2");
-		contactTitle.textContent += " " + photographer.name;
-
+		const contactTitle = document.querySelector('#contact_modal h2');
+		contactTitle.textContent += ' ' + photographer.name;
+		
 	} catch (error) {
 		console.error(error);
 	}
@@ -71,21 +71,21 @@ async function mediaInit() {
 
 mediaInit();
 
-function orderMedias(media, photographer,  orderBy = "populaire") {
-	console.log(media);
+function orderMedias(media, photographer, orderBy = 'populaire') {
+	
 	switch (orderBy) {
-		case "populaire": {
+		case 'populaire': {
 			media.sort((a, b) => b.likes - a.likes);
 			break;
 		}
-		case "date": {
+		case 'date': {
 			media.sort(
 				(a, b) =>
-					new Date(b.date).getTime() - new Date(a.date).getTime()
+					new Date(b.date).getTime() - new Date(a.date).getTime(),
 			);
 			break;
 		}
-		case "title": {
+		case 'title': {
 			media.sort((a, b) => a.title.localeCompare(b.title));
 			break;
 		}
@@ -94,32 +94,32 @@ function orderMedias(media, photographer,  orderBy = "populaire") {
 }
 
 function displayLikePrice(media, price) {
-	const element = document.querySelector(".photograph_likeprice");
+	const element = document.querySelector('.photograph_likeprice');
 	
 	element.children[0].textContent =
-		media.reduce((sum, media) => sum + media.likes, 0) + " ♥";
-	element.children[1].textContent = price + "€ / jour";
+		media.reduce((sum, media) => sum + media.likes, 0) + ' ♥';
+	element.children[1].textContent = price + '€ / jour';
 }
 
-async function displayMedia(media, photographer){
+async function displayMedia(media, photographer) {
 	
-	const mediasSection = document.getElementById("photograph_medias");
-	mediasSection.innerHTML = "";
-	mediasSection.style.gridTemplateRows = "repeat(" + Math.ceil(media.length / 3) + ", 400px)";
-
+	const mediasSection = document.getElementById('photograph_medias');
+	mediasSection.innerHTML = '';
+	mediasSection.style.gridTemplateRows = 'repeat(' + Math.ceil(media.length / 3) + ', 400px)';
+	
 	media.forEach((m) => {
-
-		const article = document.createElement("article");
-		const link = document.createElement("a");
+		
+		const article = document.createElement('article');
+		const link = document.createElement('a');
 		const mediaElement = m.video
-			? document.createElement("video")
-			: document.createElement("img");
-		const divInfos = document.createElement("div");
+			? document.createElement('video')
+			: document.createElement('img');
+		const divInfos = document.createElement('div');
 		// titre et like sous les photos
-		const photoName = document.createElement("span");
-		const photoLike = document.createElement("span");
+		const photoName = document.createElement('span');
+		const photoLike = document.createElement('span');
 		article.dataset.id = m.id;
-		link.href = "javascript:void(0)";
+		link.href = 'javascript:void(0)';
 		mediaElement.src = `./assets/images/${photographer.name}/${
 			m.video ?? m.image
 		}`;
@@ -128,25 +128,25 @@ async function displayMedia(media, photographer){
 		mediaElement.autoplay = false;
 		
 		photoName.textContent = m.title;
-		photoLike.textContent = m.likes + " \u2661";
-		photoLike.classList.add("like");
-		photoLike.onclick = ({ target }) => {
+		photoLike.textContent = m.likes + ' \u2661';
+		photoLike.classList.add('like');
+		photoLike.onclick = ({target}) => {
 			const totalLikesElement = document.querySelector(
-				".photograph_likeprice > span:first-child"
+				'.photograph_likeprice > span:first-child',
 			);
-
+			
 			if (likes.includes(m.id)) {
 				const mediaIndex = likes.indexOf(m.id);
 				totalLikesElement.textContent =
-					parseInt(totalLikesElement.textContent) - 1 + " \u2665";
+					parseInt(totalLikesElement.textContent) - 1 + ' \u2665';
 				target.textContent =
-					parseInt(target.textContent) - 1 + " \u2661";
+					parseInt(target.textContent) - 1 + ' \u2661';
 				likes.splice(mediaIndex, 1);
 			} else {
 				totalLikesElement.textContent =
-					parseInt(totalLikesElement.textContent) + 1 + " \u2665";
+					parseInt(totalLikesElement.textContent) + 1 + ' \u2665';
 				target.textContent =
-					parseInt(target.textContent) + 1 + " \u2665";
+					parseInt(target.textContent) + 1 + ' \u2665';
 				likes.push(m.id);
 			}
 		};
@@ -154,18 +154,18 @@ async function displayMedia(media, photographer){
 		// Display media modal
 		link.onclick = (event) => {
 			event.preventDefault();
-			if (event.target.classList.contains("like")) return;
+			if (event.target.classList.contains('like')) return;
 			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
-				mediaElement.cloneNode()
+				mediaElement.cloneNode(),
 			);
 			mediaModalEl.children[
 			mediaModalEl.children.length - 1
 				].children[0].controls = true;
 			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
-				photoName.cloneNode(true)
+				photoName.cloneNode(true),
 			);
-			mediaModalEl.style.display = "inherit";
-			document.body.style.overflow = "hidden";
+			mediaModalEl.style.display = 'inherit';
+			document.body.style.overflow = 'hidden';
 		};
 		
 		link.appendChild(article);
@@ -174,28 +174,29 @@ async function displayMedia(media, photographer){
 		divInfos.appendChild(photoName);
 		divInfos.appendChild(photoLike);
 		mediasSection.appendChild(link);
-	})
-
-	console.log(media);
-	return media
+	});
+	
+	
+	return media;
 }
 
 //FIXME: LA FONCTION PART DU ONCLICK MAIS JE N'ARRIVE PAS RÉCUPÉRER LES MEDIA, JE N'AI PAS TROUVÉ COMMENT FAIRE
 function changeMedia(direction) {
-	console.log(media)
+	console.log(media);
 	console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
-	const photo =
-		mediaModalEl.children[mediaModalEl.children.length - 1].children[0];
-	console.log("media: ", photo);
-	mediaModalEl.children[
-	mediaModalEl.children.length - 1
-		].children[1].remove();
-	const mediaSrc = photo.src.split("/").pop();
+	const photo = mediaModalEl.children[mediaModalEl.children.length - 1].children[0];
+	console.log('media: ', photo);
+	mediaModalEl.children[mediaModalEl.children.length - 1].children[1].remove(); // supprime le span dans la div ou il y a l'image
+	const mediaSrc = photo.src.split('/').pop();
+	console.log(mediaSrc);
 	const mediaIndex = media.indexOf(
-		media.find((el) => (el.video ?? el.image) === mediaSrc)
+		media.find((el) => (el.video ?? el.image) === mediaSrc),
 	);
-	media.remove();
-	let newIndex = direction === "left" ? mediaIndex - 1 : mediaIndex + 1;
+	console.log(mediaIndex);
+	console.log(media);
+	console.log(photo);
+	photo.remove();
+	let newIndex = direction === 'left' ? mediaIndex - 1 : mediaIndex + 1;
 	
 	if (newIndex < 0) {
 		newIndex = media.length - 1;
@@ -204,9 +205,9 @@ function changeMedia(direction) {
 	}
 	
 	const mediaElement = media[newIndex].video
-		? document.createElement("video")
-		: document.createElement("img");
-	const spanName = document.createElement("span");
+		? document.createElement('video')
+		: document.createElement('img');
+	const spanName = document.createElement('span');
 	
 	mediaElement.src = `./assets/images/${photographer.name}/${
 		media[newIndex].video ?? media[newIndex].image
@@ -215,17 +216,17 @@ function changeMedia(direction) {
 	spanName.textContent = media[newIndex].title;
 	
 	mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
-		mediaElement
+		mediaElement,
 	);
 	mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
-		spanName
+		spanName,
 	);
 }
 
 // displayMedia()
 
 function closeMediaModal() {
-	mediaModalEl.children[mediaModalEl.children.length - 1].innerHTML = "";
-	mediaModalEl.style.display = "none";
-	document.body.style.overflow = "auto";
+	mediaModalEl.children[mediaModalEl.children.length - 1].innerHTML = '';
+	mediaModalEl.style.display = 'none';
+	document.body.style.overflow = 'auto';
 }
