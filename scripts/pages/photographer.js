@@ -2,6 +2,7 @@
 
 let photographer;
 let media;
+let small
 let orderBy = 'populaire';
 likes = [];
 const mediaModalEl = document.getElementById('media_modal');
@@ -34,7 +35,7 @@ async function mediaInit() {
 		orderMedias(media, photographer);
 		displayMedia(media, photographer);
 		
-		// FIXME: EVENEMENT POUR CLIQUER SUR LES FLÊCHES DE LA MODALE, "ESCAPE" FONCTIONNE PAS LES FLÊCHES.
+
 		addEventListener('keydown', (event) => {
 			if (
 				mediaModalEl.style.display &&
@@ -53,6 +54,7 @@ async function mediaInit() {
 			if (modal.style.display && modal.style.display !== 'none') {
 				if (event.code === 'Escape') {
 					modal.style.display = 'none';
+					
 				}
 			}
 		});
@@ -106,6 +108,7 @@ async function displayMedia(media, photographer) {
 	const mediasSection = document.getElementById('photograph_medias');
 	mediasSection.innerHTML = '';
 	mediasSection.style.gridTemplateRows = 'repeat(' + Math.ceil(media.length / 3) + ', 400px)';
+	small = document.createElement('small')
 	
 	media.forEach((m) => {
 		
@@ -114,6 +117,13 @@ async function displayMedia(media, photographer) {
 		const mediaElement = m.video
 			? document.createElement('video')
 			: document.createElement('img');
+
+		
+		small.textContent = 'Vidéo'
+		if (m.video) {
+			article.appendChild(small)
+		}
+		
 		const divInfos = document.createElement('div');
 		// titre et like sous les photos
 		const photoName = document.createElement('span');
@@ -164,6 +174,7 @@ async function displayMedia(media, photographer) {
 			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
 				photoName.cloneNode(true),
 			);
+			small.style.display = "none"
 			mediaModalEl.style.display = 'inherit';
 			document.body.style.overflow = 'hidden';
 		};
@@ -180,7 +191,7 @@ async function displayMedia(media, photographer) {
 	return media;
 }
 
-//FIXME: LA FONCTION PART DU ONCLICK MAIS JE N'ARRIVE PAS RÉCUPÉRER LES MEDIA, JE N'AI PAS TROUVÉ COMMENT FAIRE
+
 function changeMedia(direction) {
 	console.log(media);
 	console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
@@ -228,5 +239,6 @@ function changeMedia(direction) {
 function closeMediaModal() {
 	mediaModalEl.children[mediaModalEl.children.length - 1].innerHTML = '';
 	mediaModalEl.style.display = 'none';
+	small.style.display = "block"
 	document.body.style.overflow = 'auto';
 }
