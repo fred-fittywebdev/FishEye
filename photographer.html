@@ -23,7 +23,7 @@
 					<p></p>
 					<p></p>
 				</div>
-				<button class="contact_button" onclick="displayModal()">
+				<button id="contact_button" class="contact_button">
 					Contactez-moi
 				</button>
 			</div>
@@ -44,8 +44,8 @@
 				<header>
 					<h2>Contacter</h2>
 					<img
+						id="close-contact"
 						alt=""
-						onclick="closeModal()"
 						src="assets/icons/close.svg"
 					/>
 				</header>
@@ -65,21 +65,9 @@
 			</div>
 		</div>
 		<div id="media_modal" aria-label="image closeup view">
-			<button
-				id="left-arrow"
-				aria-label="Previous image"
-				onclick="changeMedia('left')"
-			>
-				&lt;
-			</button>
-			<button
-				id="right-arrow"
-				aria-label="Next image"
-				onclick="changeMedia('right')"
-			>
-				>
-			</button>
-			<button aria-label="Close dialog" onclick="closeMediaModal()">
+			<button id="left-arrow" aria-label="Previous image">&lt;</button>
+			<button id="right-arrow" aria-label="Next image">></button>
+			<button id="close_lightbox" aria-label="Close dialog">
 				<svg
 					width="42"
 					height="42"

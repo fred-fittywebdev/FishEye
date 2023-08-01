@@ -1,19 +1,25 @@
+const modalEl = document.getElementById("contact_modal");
+const closeContactEl = document.getElementById("close-contact");
+console.log(closeContactEl);
+const openContactEl = document.getElementById("contact_button");
+
 function displayModal() {
-    const modal = document.getElementById("contact_modal");
-	modal.style.display = "block";
+	modalEl.style.display = "block";
 }
 
 function closeModal() {
-    const modal = document.getElementById("contact_modal");
-    modal.style.display = "none";
+	modalEl.style.display = "none";
 }
+
+openContactEl.addEventListener("click", displayModal);
+closeContactEl.addEventListener("click", closeModal);
 
 function sendFormValue() {
 	const form = document.querySelector("form");
-	
+
 	form.addEventListener("submit", (e) => {
 		e.preventDefault();
-		
+
 		try {
 			const userObject = {
 				prenom: document.querySelector("#prenom").value,
@@ -29,4 +35,4 @@ function sendFormValue() {
 	});
 }
 
-sendFormValue()
+sendFormValue();
