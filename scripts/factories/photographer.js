@@ -1,5 +1,5 @@
 // Function to create and display a photographer on index page
-function photographerFactory(data) {
+export function photographerFactory(data) {
 	const { id, name, portrait, tagline, city, country, price } = data;
 
 	const picture = `./assets/photographers/${portrait}`;

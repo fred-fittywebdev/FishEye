@@ -1,5 +1,7 @@
-// Import api data from api.js file
-// import { getPhotographerById, getPhotographerMedia } from "../API/api.js";
+// Import api data, photographer factory et contact details from aother jsfile
+import { getPhotographerById, getPhotographerMedia } from "../API/api.js";
+import { photographerFactory } from "../factories/photographer.js";
+import { closeModal, sendFormValue } from "../utils/contactForm.js";
 
 // Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
 

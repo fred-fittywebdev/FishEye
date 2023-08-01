@@ -7,14 +7,14 @@ function displayModal() {
 	modalEl.style.display = "block";
 }
 
-function closeModal() {
+export function closeModal() {
 	modalEl.style.display = "none";
 }
 
 openContactEl.addEventListener("click", displayModal);
 closeContactEl.addEventListener("click", closeModal);
 
-function sendFormValue() {
+export function sendFormValue() {
 	const form = document.querySelector("form");
 
 	form.addEventListener("submit", (e) => {

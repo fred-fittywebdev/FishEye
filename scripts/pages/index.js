@@ -1,4 +1,6 @@
 // Import api data from api.js file
+import { getPhotographers } from "../API/api.js";
+import { photographerFactory } from "../factories/photographer.js";
 
 async function displayData(photographers) {
 	const photographersSection = document.querySelector(

@@ -1,11 +1,12 @@
 #contact_modal {
-    display: none;
+	display: none;
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	top: 0;
 	left: 0;
 	background-color: #fafafa80;
+	z-index: 6;
 }
 
 #media_modal {
@@ -98,105 +99,105 @@
 }
 
 .photograph-header {
-    background-color: #FAFAFA;
-    height: 300px;
-    margin: 0 100px;
+	background-color: #fafafa;
+	height: 300px;
+	margin: 0 100px;
 }
 
 .contact_button {
-    font-size: 20px;
-    font-weight: bold;
-    color: white;
-    padding: 11px;
-    width: 170px;
-    height: 70px;
-    border: none;
-    background-color: #901C1C;
-    border-radius: 5px;
-    cursor: pointer;
+	font-size: 20px;
+	font-weight: bold;
+	color: white;
+	padding: 11px;
+	width: 170px;
+	height: 70px;
+	border: none;
+	background-color: #901c1c;
+	border-radius: 5px;
+	cursor: pointer;
 }
 
 .modal {
-    border-radius: 5px;
-    background-color: #DB8876;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 35px;
-    margin: auto;
+	border-radius: 5px;
+	background-color: #db8876;
+	width: 50%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding: 35px;
+	margin: auto;
 }
 
 .modal header {
-    justify-content: space-between;
-    width: 100%;
+	justify-content: space-between;
+	width: 100%;
 }
 
 .modal header img {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .modal header h2 {
-    font-size: 64px;
-    font-weight: normal;
-    text-align: center;
+	font-size: 64px;
+	font-weight: normal;
+	text-align: center;
 }
 
 form {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
-    align-items: flex-start;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	align-items: flex-start;
 }
 
 form label {
-    color: #312E2E;
-    font-size: 36px;
+	color: #312e2e;
+	font-size: 36px;
 }
 
 form div {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    align-items: self-start;
-    margin-bottom: 26px;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	align-items: self-start;
+	margin-bottom: 26px;
 }
 
 form input {
-    width: 100%;
-    height: 68px;
-    border: none;
-    border-radius: 5px;
+	width: 100%;
+	height: 68px;
+	border: none;
+	border-radius: 5px;
 }
 
 /* photographe infos */
 .photograph-header {
-    height: 300px;
-    margin: 0 100px;
-    padding: 0 75px;
-    background-color: #fafafa;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+	height: 300px;
+	margin: 0 100px;
+	padding: 0 75px;
+	background-color: #fafafa;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .photograph_infos > h1 {
-    color: #db8876;
-    font-size: 3em;
-    margin: 0.5em 0;
+	color: #db8876;
+	font-size: 3em;
+	margin: 0.5em 0;
 }
 
 .photograph_infos > p:nth-child(2) {
-    color: #901c1c;
-    font-size: 1.5em;
+	color: #901c1c;
+	font-size: 1.5em;
 }
 
 .photograph-header img {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 100%;
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 100%;
 }
 
 /* select pour trier les photos */
@@ -220,20 +221,20 @@ form input {
 
 /* Galerie d'image du photographe */
 #photograph_medias {
-    margin: 100px;
-    margin-top: 50px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 75px 100px;
+	margin: 100px;
+	margin-top: 50px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 75px 100px;
 }
 
 #photograph_medias a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 #photograph_medias article {
-    width: 100%;
-    height: 100%;
+	width: 100%;
+	height: 100%;
 	position: relative;
 }
 
@@ -265,22 +266,22 @@ form input {
 #photograph_medias img,
 #photograph_medias video {
 	position: relative;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 5px;
 }
 
 #photograph_medias div {
-    color: #901c1c;
-    font-size: 1.25em;
-    display: flex;
-    justify-content: space-between;
+	color: #901c1c;
+	font-size: 1.25em;
+	display: flex;
+	justify-content: space-between;
 }
 
 #photograph_medias div span:last-child {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .photograph_likeprice {

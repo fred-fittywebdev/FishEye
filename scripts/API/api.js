@@ -6,7 +6,7 @@ const dataUrl = "./data/photographers.json";
  * Retreive photgraphers data from data/photographers.json
  * @returns {Promise<any>}
  */
-async function getPhotographers() {
+export async function getPhotographers() {
 	try {
 		const response = await fetch(dataUrl);
 		const data = await response.json();
@@ -20,7 +20,7 @@ async function getPhotographers() {
  * Retreive photgrapher data provided by the photgrapher id passed in the URL
  * @returns {Promise<any>}
  */
-async function getPhotographerById() {
+export async function getPhotographerById() {
 	const data = await getPhotographers();
 
 	const photographer = data.photographers.find(
@@ -33,7 +33,7 @@ async function getPhotographerById() {
  * Retrieve media of the photographer with the idea passed in url
  * @returns {Promise<*>}
  */
-async function getPhotographerMedia() {
+export async function getPhotographerMedia() {
 	const photographerObjet = await getPhotographerById(); //Return the photographer object
 	const selectedPhotographer = photographerObjet.id; //Return the id of the photographer of the page
 
