@@ -1,7 +1,6 @@
-const searchParamsId = new URLSearchParams(location.search);
-const photographerId = +searchParamsId.get("id");
 const dataUrl = "./data/photographers.json";
 
+//TODO: Faire des types pour la jsdocs
 /**
  * Retreive photgraphers data from data/photographers.json
  * @returns {Promise<any>}
@@ -20,12 +19,11 @@ export async function getPhotographers() {
  * Retreive photgrapher data provided by the photgrapher id passed in the URL
  * @returns {Promise<any>}
  */
-export async function getPhotographerById() {
+export async function getPhotographerById(userId) {
 	const data = await getPhotographers();
 
-	const photographer = data.photographers.find(
-		(p) => p.id === photographerId
-	);
+	const photographer = data.photographers.find((p) => p.id === userId);
+	console.log(photographer);
 	return photographer;
 }
 
@@ -33,9 +31,9 @@ export async function getPhotographerById() {
  * Retrieve media of the photographer with the idea passed in url
  * @returns {Promise<*>}
  */
-export async function getPhotographerMedia() {
-	const photographerObjet = await getPhotographerById(); //Return the photographer object
-	const selectedPhotographer = photographerObjet.id; //Return the id of the photographer of the page
+export async function getPhotographerMedia(userId) {
+	// const photographerObjet = await getPhotographerById(userId); //Return the photographer object
+	const selectedPhotographer = userId; //Return the id of the photographer of the page
 
 	const data = await getPhotographers(); //Return all data (photographers + media) --> data : [object Object]
 

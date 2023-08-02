@@ -4,7 +4,8 @@ import { photographerFactory } from "../factories/photographer.js";
 import { closeModal, sendFormValue } from "../utils/contactForm.js";
 
 // Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
-
+const searchParamsId = new URLSearchParams(location.search);
+const photographerId = +searchParamsId.get("id");
 let photographer;
 let media;
 let small;
@@ -23,7 +24,7 @@ function photographInfos(photographer) {
 
 async function initHeader() {
 	try {
-		const photographerHeader = await getPhotographerById();
+		const photographerHeader = await getPhotographerById(photographerId);
 		photographInfos(photographerHeader);
 	} catch (e) {
 		console.log(e);
@@ -34,8 +35,8 @@ initHeader();
 
 async function mediaInit() {
 	try {
-		photographer = await getPhotographerById();
-		media = await getPhotographerMedia();
+		photographer = await getPhotographerById(photographerId);
+		media = await getPhotographerMedia(photographerId);
 		// media: stocke tous les medias du photographe de la page
 		displayLikePrice(media, photographer.price);
 		orderMedias(media, photographer);
@@ -169,6 +170,7 @@ async function displayMedia(media, photographer) {
 			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
 				mediaElement.cloneNode()
 			);
+			console.log(mediaElement.cloneNode());
 			mediaModalEl.children[
 				mediaModalEl.children.length - 1
 			].children[0].controls = true;
@@ -192,7 +194,9 @@ async function displayMedia(media, photographer) {
 }
 
 function changeMedia(direction) {
-	console.log(media);
+	console.log(mediaModalEl);
+	// console.log(mediaModalEl.lastElementChild.firstElementChild)
+	console.log(mediaModalEl.lastElementChild);
 	console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
 	const photo =
 		mediaModalEl.children[mediaModalEl.children.length - 1].children[0];

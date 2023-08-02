@@ -42,6 +42,7 @@ export function photographerFactory(data) {
 	}
 
 	function getPhotographerDom() {
+		//TODO: refaire en supprimant les querySelector()
 		const nameElement = document.querySelector(".photograph_infos > h1");
 		const locationElement = document.querySelector(
 			".photograph_infos > p:nth-child(2)"
