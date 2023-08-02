@@ -194,16 +194,15 @@ async function displayMedia(media, photographer) {
 }
 
 function changeMedia(direction) {
-	console.log(mediaModalEl);
+	const titrePhoto = mediaModalEl.lastElementChild.lastElementChild;
+	//console.log(titrePhoto); // span title below photo
 	// console.log(mediaModalEl.lastElementChild.firstElementChild)
-	console.log(mediaModalEl.lastElementChild);
-	console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
-	const photo =
-		mediaModalEl.children[mediaModalEl.children.length - 1].children[0];
+	// console.log(mediaModalEl.lastElementChild.firstElementChild);
+	// console.log(mediaModalEl.children[mediaModalEl.children.length - 1]);
+	const photo = mediaModalEl.lastElementChild.firstElementChild;
 	console.log("media: ", photo);
-	mediaModalEl.children[
-		mediaModalEl.children.length - 1
-	].children[1].remove(); // supprime le span dans la div ou il y a l'image
+	titrePhoto.remove(); // supprime le span dans la div ou il y a l'image
+
 	const mediaSrc = photo.src.split("/").pop();
 	console.log(mediaSrc);
 	const mediaIndex = media.indexOf(
