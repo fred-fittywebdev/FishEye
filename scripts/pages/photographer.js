@@ -6,6 +6,7 @@ import { closeModal, sendFormValue } from "../utils/contactForm.js";
 // Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
 const searchParamsId = new URLSearchParams(location.search);
 const photographerId = +searchParamsId.get("id");
+
 let photographer;
 let media;
 let small;
@@ -16,6 +17,8 @@ const modal = document.getElementById("contact_modal");
 const closeLightboxEl = document.getElementById("close_lightbox");
 const btnLightboxNextEl = document.getElementById("right-arrow");
 const btnLightboxPrevEl = document.getElementById("left-arrow");
+const mediaSectionLinksEl = document.getElementById("photograph_medias");
+const photographHeaderEl = document.querySelector(".photograph-header");
 
 function photographInfos(photographer) {
 	const phtographerModel = photographerFactory(photographer);
@@ -131,6 +134,8 @@ async function displayMedia(media, photographer) {
 		const photoLike = document.createElement("span");
 		article.dataset.id = m.id;
 		link.href = "javascript:void(0)";
+		link.id = m.title;
+		// link.tabIndex = "-1";
 		mediaElement.src = m.video
 			? `./assets/images/${photographer.name}/${m.video}`
 			: `./assets/images/${photographer.name}/${m.image}`;
@@ -166,10 +171,20 @@ async function displayMedia(media, photographer) {
 		// Display media modal
 		link.onclick = (event) => {
 			event.preventDefault();
+			// Tab navigation in lightbox
+			mediaModalEl.setAttribute("aria-hidden", "false");
+			mediasSection.childNodes.forEach((a) => {
+				if (a.id !== link.id) {
+					a.setAttribute("tabindex", -1);
+				}
+			});
+			photographHeaderEl.setAttribute("tabindex", -1);
+			closeLightboxEl.focus();
 			if (event.target.classList.contains("like")) return;
 			mediaModalEl.children[mediaModalEl.children.length - 1].appendChild(
 				mediaElement.cloneNode()
 			);
+
 			console.log(mediaElement.cloneNode());
 			mediaModalEl.children[
 				mediaModalEl.children.length - 1
@@ -255,6 +270,9 @@ function closeMediaModal() {
 	mediaModalEl.style.display = "none";
 	small.style.display = "block";
 	document.body.style.overflow = "auto";
+	mediaSectionLinksEl.childNodes.forEach((a) => {
+		a.setAttribute("tabindex", 0);
+	});
 }
 
 closeLightboxEl.addEventListener("click", closeMediaModal);

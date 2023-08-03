@@ -11,13 +11,23 @@
 		<title>Fisheye - photographe</title>
 	</head>
 	<body>
-		<header>
-			<a href="index.html">
-				<img alt="" class="logo" src="assets/images/logo.png" />
+		<header tabindex="-1">
+			<a
+				href="index.html"
+				aria-label="Logo de Fisheye permettant de revenir a l'acceuil"
+			>
+				<img
+					alt="Fisheye logo"
+					class="logo"
+					src="assets/images/logo.png"
+				/>
 			</a>
 		</header>
 		<main id="main">
-			<div class="photograph-header">
+			<div
+				class="photograph-header"
+				aria-label="Informations sur le photographe"
+			>
 				<div class="photograph_infos">
 					<h1></h1>
 					<p></p>
@@ -27,9 +37,13 @@
 					Contactez-moi
 				</button>
 			</div>
-			<div id="select">
-				<label for="orderSelect">Trier par</label>
-				<select id="orderSelect" name="orderSelect">
+			<div id="select" role="group" aria-labelledby="filter-label">
+				<label id="filter-label" for="orderSelect">Trier par</label>
+				<select
+					id="orderSelect"
+					name="orderSelect"
+					aria-labelledby="filter-label"
+				>
 					<option value="populaire">Popularité</option>
 					<option value="date">Date</option>
 					<option value="title">Titre</option>
@@ -39,10 +53,20 @@
 			<section id="photograph_medias"></section>
 			<div class="photograph_likeprice"><span></span><span></span></div>
 		</main>
-		<div id="contact_modal">
-			<div class="modal">
+		<div
+			id="contact_modal"
+			role="dialog"
+			aria-labelledby="modal_title"
+			aria-hidden="true"
+		>
+			<div id="contact-modal" class="modal">
 				<header>
-					<h2>Contacter</h2>
+					<h2
+						id="modal_title"
+						aria-label="Cliquer pour ouvrir le formulaire de contact"
+					>
+						Contacter
+					</h2>
 					<img
 						id="close-contact"
 						alt=""
@@ -52,22 +76,46 @@
 				<form>
 					<div>
 						<label for="prenom">Prénom</label>
-						<input id="prenom" name="prenom" />
+						<input
+							id="prenom"
+							name="prenom"
+							type="text"
+							minlength="2"
+							required
+						/>
 						<label for="nom">Nom</label>
-						<input id="nom" name="nom" />
+						<input
+							id="nom"
+							name="nom"
+							type="text"
+							minlength="2"
+							required
+						/>
 						<label for="email">Email</label>
-						<input id="email" name="email" />
+						<input id="email" name="email" type="email" required />
 						<label for="message">Message</label>
-						<textarea id="message" name="message"></textarea>
+						<textarea
+							id="message"
+							name="message"
+							required
+						></textarea>
 					</div>
 					<button class="contact_button">Envoyer</button>
 				</form>
 			</div>
 		</div>
-		<div id="media_modal" aria-label="image closeup view">
-			<button id="left-arrow" aria-label="Previous image">&lt;</button>
-			<button id="right-arrow" aria-label="Next image">&gt;</button>
-			<button id="close_lightbox" aria-label="Close dialog">
+		<div
+			id="media_modal"
+			role="dialog"
+			aria-label="Gros plan sur la photo selectionée"
+			aria-hidden="true"
+		>
+			<button id="left-arrow" aria-label="Image précédente">&lt;</button>
+			<button id="right-arrow" aria-label="Image suivante">&gt;</button>
+			<button
+				id="close_lightbox"
+				aria-label="Croix pour femer la lightbox"
+			>
 				<svg
 					width="42"
 					height="42"
