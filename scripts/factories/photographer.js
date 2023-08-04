@@ -42,6 +42,8 @@ export function photographerFactory(data) {
 	}
 
 	function getPhotographerDom() {
+		// NOTE: 1 - je n'arrive pas l'implémenter en créant un élément.
+		// const header = document.createElement("div")
 		const photograpInfos = document.createElement("div");
 		photograpInfos.classList.add("photograph_infos");
 		const nameElement = document.createElement("h1");
@@ -63,10 +65,13 @@ export function photographerFactory(data) {
 		image.src = `./assets/photographers/${portrait}`;
 		image.alt = name;
 
+		//NOTE: 2 -  si je l'enlève la mise en page n'est plus bonne
 		const header = document.querySelector(".photograph-header");
 
 		header.prepend(photograpInfos);
 		header.appendChild(image);
+
+		return header;
 	}
 
 	return { getUserCardDOM, getPhotographerDom };

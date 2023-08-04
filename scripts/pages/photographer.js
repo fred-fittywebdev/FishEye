@@ -31,6 +31,7 @@ const mediaSectionLinksEl = document.getElementById("photograph_medias");
 const photographHeaderEl = document.querySelector(".photograph-header");
 
 function photographInfos(photographer) {
+	//NOTE: 3 - suis-je dans le vrai?
 	const header = document.querySelector(".photograph-header");
 
 	const phtographerModel = photographerFactory(photographer);
