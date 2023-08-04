@@ -20,14 +20,13 @@ function checkValidity() {
 	}
 }
 
-checkValidity();
-
 for (let element of formEl.elements) {
 	element.addEventListener("input", checkValidity);
 }
 
-function displayModal() {
+export function displayModal() {
 	modalEl.style.display = "block";
+	checkValidity();
 }
 
 export function closeModal() {
@@ -35,28 +34,17 @@ export function closeModal() {
 	modalEl.style.display = "none";
 }
 
-openContactEl.addEventListener("click", displayModal);
-closeContactEl.addEventListener("click", closeModal);
-
 export function sendFormValue() {
-	const form = document.querySelector("form");
-
-	form.addEventListener("submit", (e) => {
-		e.preventDefault();
-
-		try {
-			const userObject = {
-				prenom: document.querySelector("#prenom").value,
-				nom: document.querySelector("#nom").value,
-				email: document.querySelector("#email").value,
-				message: document.querySelector("#message").value,
-			};
-			console.log(userObject);
-			closeModal();
-		} catch (error) {
-			console.log(error);
-		}
-	});
+	try {
+		const userObject = {
+			prenom: document.querySelector("#prenom").value,
+			nom: document.querySelector("#nom").value,
+			email: document.querySelector("#email").value,
+			message: document.querySelector("#message").value,
+		};
+		console.log(userObject);
+		closeModal();
+	} catch (error) {
+		console.log(error);
+	}
 }
-
-sendFormValue();

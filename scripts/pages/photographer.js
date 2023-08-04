@@ -1,12 +1,22 @@
 // Import api data, photographer factory et contact details from aother jsfile
 import { getPhotographerById, getPhotographerMedia } from "../API/api.js";
 import { photographerFactory } from "../factories/photographer.js";
-import { closeModal, sendFormValue } from "../utils/contactForm.js";
+import {
+	closeModal,
+	sendFormValue,
+	displayModal,
+} from "../utils/contactForm.js";
 
-// Déclaration des variables pour afficher le contenu du photographe dont l'ID est dans l'URL
+// Variables to retreive the id of the photographer send into the url
 const searchParamsId = new URLSearchParams(location.search);
 const photographerId = +searchParamsId.get("id");
 
+// Variables for the contact form modal (contact photographer)
+const closeContactEl = document.getElementById("close-contact");
+const openContactEl = document.getElementById("contact_button");
+const formEl = document.querySelector("form");
+
+// Variables for the photographer and the media
 let photographer;
 let media;
 let small;
@@ -38,6 +48,13 @@ async function initHeader() {
 }
 
 initHeader();
+// Contact modal
+openContactEl.addEventListener("click", displayModal);
+closeContactEl.addEventListener("click", closeModal);
+formEl.addEventListener("submit", function (e) {
+	e.preventDefault();
+	sendFormValue();
+});
 
 async function mediaInit() {
 	try {

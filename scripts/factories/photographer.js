@@ -44,16 +44,10 @@ export function photographerFactory(data) {
 	function getPhotographerDom() {
 		const photograpInfos = document.createElement("div");
 		photograpInfos.classList.add("photograph_infos");
-		//TODO: refaire en supprimant les querySelector()
-		// const nameElement = document.querySelector(".photograph_infos > h1");
 		const nameElement = document.createElement("h1");
-		// const locationElement = document.querySelector(
-		// 	".photograph_infos > p:nth-child(2)"
-		// );
+
 		const locationElement = document.createElement("p");
-		// const taglineElement = document.querySelector(
-		// 	".photograph_infos > p:last-child"
-		// );
+
 		const taglineElement = document.createElement("p");
 
 		const image = document.createElement("img");
