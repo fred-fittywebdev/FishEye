@@ -42,25 +42,36 @@ export function photographerFactory(data) {
 	}
 
 	function getPhotographerDom() {
+		const photograpInfos = document.createElement("div");
+		photograpInfos.classList.add("photograph_infos");
 		//TODO: refaire en supprimant les querySelector()
-		const nameElement = document.querySelector(".photograph_infos > h1");
-		const locationElement = document.querySelector(
-			".photograph_infos > p:nth-child(2)"
-		);
-		const taglineElement = document.querySelector(
-			".photograph_infos > p:last-child"
-		);
+		// const nameElement = document.querySelector(".photograph_infos > h1");
+		const nameElement = document.createElement("h1");
+		// const locationElement = document.querySelector(
+		// 	".photograph_infos > p:nth-child(2)"
+		// );
+		const locationElement = document.createElement("p");
+		// const taglineElement = document.querySelector(
+		// 	".photograph_infos > p:last-child"
+		// );
+		const taglineElement = document.createElement("p");
+
+		const image = document.createElement("img");
 
 		nameElement.textContent = name;
 		locationElement.textContent = city + ", " + country;
 		taglineElement.textContent = tagline;
 
-		const header = document.querySelector(".photograph-header");
-		const image = document.createElement("img");
+		photograpInfos.appendChild(nameElement);
+		photograpInfos.appendChild(locationElement);
+		photograpInfos.appendChild(taglineElement);
 
 		image.src = `./assets/photographers/${portrait}`;
 		image.alt = name;
 
+		const header = document.querySelector(".photograph-header");
+
+		header.prepend(photograpInfos);
 		header.appendChild(image);
 	}
 

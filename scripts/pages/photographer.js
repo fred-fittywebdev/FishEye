@@ -21,8 +21,11 @@ const mediaSectionLinksEl = document.getElementById("photograph_medias");
 const photographHeaderEl = document.querySelector(".photograph-header");
 
 function photographInfos(photographer) {
+	const header = document.querySelector(".photograph-header");
+
 	const phtographerModel = photographerFactory(photographer);
-	phtographerModel.getPhotographerDom();
+	const photographerCardDom = phtographerModel.getPhotographerDom();
+	header.appendChild(photographerCardDom);
 }
 
 async function initHeader() {
