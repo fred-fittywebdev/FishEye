@@ -17,6 +17,7 @@ const openContactEl = document.getElementById("contact_button");
 const formEl = document.querySelector("form");
 
 // Variables for the photographer and the media
+let photographerHeader;
 let photographer;
 let media;
 let small;
@@ -29,77 +30,84 @@ const btnLightboxNextEl = document.getElementById("right-arrow");
 const btnLightboxPrevEl = document.getElementById("left-arrow");
 const mediaSectionLinksEl = document.getElementById("photograph_medias");
 const photographHeaderEl = document.querySelector(".photograph-header");
+const orderSelect = document.querySelector("#select");
+const contactTitle = document.querySelector("#contact_modal h2");
 
-function photographInfos(photographer) {
-	//NOTE: 3 - suis-je dans le vrai?
-	const header = document.querySelector(".photograph-header");
-
-	const phtographerModel = photographerFactory(photographer);
-	const photographerCardDom = phtographerModel.getPhotographerDom();
-	header.appendChild(photographerCardDom);
-}
-
-async function initHeader() {
+async function init() {
 	try {
-		const photographerHeader = await getPhotographerById(photographerId);
+		photographerHeader = await getPhotographerById(photographerId);
+		photographer = await getPhotographerById(photographerId);
+		media = await getPhotographerMedia(photographerId);
+
 		photographInfos(photographerHeader);
+		displayLikePrice(media, photographer.price);
+		orderMedias(media, photographer);
+		displayMedia(media, photographer);
+
+		createEventListenners();
+		changeMedia(direction);
+		closeModal();
 	} catch (e) {
 		console.log(e);
 	}
 }
 
-initHeader();
-// Contact modal
-openContactEl.addEventListener("click", displayModal);
-closeContactEl.addEventListener("click", closeModal);
-formEl.addEventListener("submit", function (e) {
-	e.preventDefault();
-	sendFormValue();
-});
+init();
 
-async function mediaInit() {
-	try {
-		photographer = await getPhotographerById(photographerId);
-		media = await getPhotographerMedia(photographerId);
-		// media: stocke tous les medias du photographe de la page
-		displayLikePrice(media, photographer.price);
-		orderMedias(media, photographer);
-		displayMedia(media, photographer);
-
-		addEventListener("keydown", (event) => {
-			if (
-				mediaModalEl.style.display &&
-				mediaModalEl.style.display !== "none"
-			) {
-				if (event.code === "ArrowLeft") {
-					return changeMedia("left");
-				}
-				if (event.code === "ArrowRight") {
-					return changeMedia("right");
-				}
-				if (event.code === "Escape") {
-					return closeMediaModal();
-				}
+function createEventListenners() {
+	addEventListener("keydown", (event) => {
+		if (
+			mediaModalEl.style.display &&
+			mediaModalEl.style.display !== "none"
+		) {
+			if (event.code === "ArrowLeft") {
+				return changeMedia("left");
 			}
-			if (modal.style.display && modal.style.display !== "none") {
-				if (event.code === "Escape") {
-					modal.style.display = "none";
-				}
+			if (event.code === "ArrowRight") {
+				return changeMedia("right");
 			}
-		});
+			if (event.code === "Escape") {
+				return closeMediaModal();
+			}
+		}
+		if (modal.style.display && modal.style.display !== "none") {
+			if (event.code === "Escape") {
+				modal.style.display = "none";
+			}
+		}
+	});
 
-		const orderSelect = document.querySelector("#select");
-		orderSelect.onchange = ({ target: { value } }) =>
-			orderMedias(media, photographer, value);
+	orderSelect.onchange = ({ target: { value } }) =>
+		orderMedias(media, photographer, value);
 
-		const contactTitle = document.querySelector("#contact_modal h2");
-		contactTitle.textContent += " " + photographer.name;
-	} catch (error) {
-		console.error(error);
-	}
+	contactTitle.textContent += " " + photographer.name;
+	// openContactEl.addEventListener("click", displayModal);
+	// closeContactEl.addEventListener("click", closeModal);
+
+	formEl.addEventListener("submit", function (e) {
+		e.preventDefault();
+		sendFormValue();
+	});
+	btnLightboxNextEl.addEventListener("click", function () {
+		changeMedia("right");
+	});
+
+	btnLightboxPrevEl.addEventListener("click", function () {
+		changeMedia("left");
+	});
+	closeLightboxEl.addEventListener("click", closeMediaModal);
 }
 
-mediaInit();
+function photographInfos(photographer) {
+	//NOTE: 3 - suis-je dans le vrai?
+	const header = document.querySelector(".photograph-header");
+	// const main = document.querySelector("#main");
+
+	const phtographerModel = photographerFactory(photographer);
+	const photographerCardDom = phtographerModel.getPhotographerDom();
+	header.innerHTML = photographerCardDom.innerHTML;
+	// main.prepend(photographerCardDom);
+}
 
 function orderMedias(media, photographer, orderBy = "populaire") {
 	switch (orderBy) {
@@ -276,16 +284,6 @@ function changeMedia(direction) {
 	);
 }
 
-btnLightboxNextEl.addEventListener("click", function () {
-	changeMedia("right");
-});
-
-btnLightboxPrevEl.addEventListener("click", function () {
-	changeMedia("left");
-});
-
-// displayMedia()
-
 function closeMediaModal() {
 	mediaModalEl.children[mediaModalEl.children.length - 1].innerHTML = "";
 	mediaModalEl.style.display = "none";
@@ -295,5 +293,3 @@ function closeMediaModal() {
 		a.setAttribute("tabindex", 0);
 	});
 }
-
-closeLightboxEl.addEventListener("click", closeMediaModal);
