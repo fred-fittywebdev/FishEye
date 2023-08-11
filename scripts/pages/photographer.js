@@ -1,5 +1,5 @@
 // Import api data, photographer factory et contact details from aother jsfile
-import { getPhotographerById, getPhotographerMedia } from "../API/api.js";
+import { getPhotographerById } from "../API/api.js";
 import { photographerFactory } from "../factories/photographer.js";
 import {
 	closeModal,
@@ -11,16 +11,11 @@ import {
 const searchParamsId = new URLSearchParams(location.search);
 const photographerId = +searchParamsId.get("id");
 
-// Variables for the contact form modal (contact photographer)
-const closeContactEl = document.getElementById("close-contact");
-const openContactEl = document.getElementById("contact_button");
-const formEl = document.querySelector("form");
-
 // Variables for the photographer and the media
-let photographerHeader;
 let photographer;
 let media;
 let small;
+let direction;
 let orderBy = "populaire";
 let likes = [];
 const mediaModalEl = document.getElementById("media_modal");
@@ -31,21 +26,25 @@ const btnLightboxPrevEl = document.getElementById("left-arrow");
 const mediaSectionLinksEl = document.getElementById("photograph_medias");
 const photographHeaderEl = document.querySelector(".photograph-header");
 const orderSelect = document.querySelector("#select");
-const contactTitle = document.querySelector("#contact_modal h2");
 
 async function init() {
 	try {
-		photographerHeader = await getPhotographerById(photographerId);
-		photographer = await getPhotographerById(photographerId);
-		media = await getPhotographerMedia(photographerId);
+		const photographerData = await await getPhotographerById(
+			photographerId
+		);
+		photographer = photographerData.photographer;
+		media = photographerData.media;
 
-		photographInfos(photographerHeader);
+		photographInfos(photographer);
 		displayLikePrice(media, photographer.price);
 		orderMedias(media, photographer);
 		displayMedia(media, photographer);
 
 		createEventListenners();
-		changeMedia(direction);
+		if (direction) {
+			changeMedia(direction);
+		}
+
 		closeModal();
 	} catch (e) {
 		console.log(e);
@@ -54,7 +53,13 @@ async function init() {
 
 init();
 
+// Function to create and list all eventlistener on the page
 function createEventListenners() {
+	const closeContactEl = document.getElementById("close-contact");
+	const openContactEl = document.getElementById("contact_button");
+	const contactTitle = document.querySelector("#contact_modal h2");
+	const formEl = document.querySelector("form");
+
 	addEventListener("keydown", (event) => {
 		if (
 			mediaModalEl.style.display &&
@@ -81,8 +86,8 @@ function createEventListenners() {
 		orderMedias(media, photographer, value);
 
 	contactTitle.textContent += " " + photographer.name;
-	// openContactEl.addEventListener("click", displayModal);
-	// closeContactEl.addEventListener("click", closeModal);
+	openContactEl.addEventListener("click", displayModal);
+	closeContactEl.addEventListener("click", closeModal);
 
 	formEl.addEventListener("submit", function (e) {
 		e.preventDefault();
